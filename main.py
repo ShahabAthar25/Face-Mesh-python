@@ -12,7 +12,7 @@ previous_time = 0
 face_mesh_model = mp.solutions.face_mesh
 face_mesh = face_mesh_model.FaceMesh()
 draw = mp.solutions.drawing_utils
-draw_spec = draw.DrawingSpec(thickness=1, circle_raduis=2)
+draw_spec = draw.DrawingSpec(thickness=2, circle_radius=2)
 
 while True:
     success, img = cap.read()
@@ -22,7 +22,7 @@ while True:
 
     if results.multi_face_landmarks:
         for face_landmark in results.multi_face_landmarks:
-            draw.draw_landmarks(img, face_landmark, face_mesh_model.FACEMESH_CONTOURS)
+            draw.draw_landmarks(img, face_landmark, face_mesh_model.FACEMESH_CONTOURS, draw_spec)
 
     current_time = time.time()
     fps = 1/(current_time - previous_time)
