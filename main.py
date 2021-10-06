@@ -2,6 +2,8 @@ import cv2
 import mediapipe as mp
 import time
 
+from mediapipe.python.solutions.drawing_styles import _THICKNESS_DOT
+
 cap = cv2.VideoCapture(0)
 
 current_time = 0
@@ -10,6 +12,7 @@ previous_time = 0
 face_mesh_model = mp.solutions.face_mesh
 face_mesh = face_mesh_model.FaceMesh()
 draw = mp.solutions.drawing_utils
+draw_spec = draw.DrawingSpec(thickness=1, circle_raduis=2)
 
 while True:
     success, img = cap.read()
@@ -19,7 +22,7 @@ while True:
 
     if results.multi_face_landmarks:
         for face_landmark in results.multi_face_landmarks:
-            draw.draw_landmarks(img, face_landmark)
+            draw.draw_landmarks(img, face_landmark, face_mesh_model.FACEMESH_CONTOURS)
 
     current_time = time.time()
     fps = 1/(current_time - previous_time)
